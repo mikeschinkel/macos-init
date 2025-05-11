@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+# .zshenv is sourced for all instances of Zsh
+# It should contain commands to set the command search path, 
+# plus other important environment variables
+# This file should not contain commands that produce output
+# or assume the shell is attached to a tty
+
+# Global environment variables go here
+# export EDITOR='vim'
+
+export PATH="${HOME}/bin:${PATH}"
+
+export NVM_DIR="${HOME}/.nvm"
+
+## This is the default host for docker, just here for the ratio
+export DOCKER_HOST="/var/run/docker.sock"
