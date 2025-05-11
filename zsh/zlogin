@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+# .zlogin is sourced for login shells (after .zshrc)
+# It's used for tasks that should be executed only once
+# during login, but should happen after .zshrc
+
+# Login-specific tasks that should run after .zshrc goes here
+
