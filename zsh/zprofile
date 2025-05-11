@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# .zprofile is sourced for login shells
+# It's the recommended place to set environment variables
+# required by login shells and initialization commands that
+# should run only once
+
+# Login shell specific environment setup goes here
+
+eval "$(/usr/local/bin/brew shellenv)"
+
+# Added by Toolbox App
+export PATH="$PATH:/usr/local/bin"
+
