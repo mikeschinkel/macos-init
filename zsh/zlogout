@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+# .zlogout is sourced when a login shell exits
+# Use this file for cleanup operations
+
+# Logout tasks go here
+# Clear the screen on logout, for example
+# clear
+
