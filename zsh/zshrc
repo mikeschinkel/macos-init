@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+# .zshrc is sourced for interactive shells
+# This is where most of your shell customization should go
+
+[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
+
+# Set options
+# setopt autocd              # change directory just by typing its name
+# setopt interactivecomments # allow comments in interactive mode
+# setopt magicequalsubst     # enable filename expansion for arguments of the form 'anything=expression'
+# setopt promptsubst         # enable command substitution in prompt
+
+# History settings
+# HISTFILE=$HOME/.zsh_history
+# HISTSIZE=10000
+# SAVEHIST=10000
+# setopt appendhistory
+# setopt hist_expire_dups_first
+# setopt hist_ignore_dups
+# setopt hist_ignore_space
+# setopt inc_append_history
+# setopt share_history
+
+# Key bindings
+# bindkey -e  # emacs key bindings
+
+# Aliases
+# alias ls='ls -G'
+# alias ll='ls -lh'
+# alias la='ls -lah'
+alias glo='git log --oneline -20'
+
+# Functions
+# function mkcd() { mkdir -p "$@" && cd "$@"; }
+
+# Prompt configuration
+# PS1='%n@%m %~ %# '
+
+# Plugin and theme setup would go here
