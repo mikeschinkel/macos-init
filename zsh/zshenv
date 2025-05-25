@@ -13,4 +13,6 @@ export PATH="${HOME}/bin:${PATH}"
 export NVM_DIR="${HOME}/.nvm"
 
 ## This is the default host for docker, just here for the ratio
-export DOCKER_HOST="/var/run/docker.sock"
+##export DOCKER_HOST="/var/run/docker.sock"
+
+export INIT_DIR="${HOME}/.init"
