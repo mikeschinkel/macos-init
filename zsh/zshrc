@@ -30,6 +30,7 @@
 # alias ll='ls -lh'
 # alias la='ls -lah'
 alias glo='git log --oneline -20'
+alias wp-sync="rsync -avz --delete ./wordpress-root/ wp-deploy:/srv/wordpress/"
 
 # Functions
 # function mkcd() { mkdir -p "$@" && cd "$@"; }
