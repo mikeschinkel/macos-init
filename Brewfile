@@ -15,6 +15,7 @@ brew "rsync"
 brew "unar"
 brew "sf"
 brew "jq"
+brew "cloudflared"
 
 cask "google-chrome"
 cask "zed"
