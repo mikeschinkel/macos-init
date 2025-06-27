@@ -16,3 +16,5 @@ export NVM_DIR="${HOME}/.nvm"
 ##export DOCKER_HOST="/var/run/docker.sock"
 
 export INIT_DIR="${HOME}/.init"
+
+export GOOGLE_CLOUD_PROJECT="stable-electron-464204-n4"
