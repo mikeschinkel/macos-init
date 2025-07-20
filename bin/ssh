@@ -1,0 +1,57 @@
+#!/bin/bash
+
+LOGBASE="$HOME/Projects/logs"
+DATESTR="$(date '+%Y-%m-%d')"
+START_TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S')"
+START_EPOCH=$(date +%s)
+
+# Extract hostname from first positional argument
+TARGET="$1"
+HOST="${TARGET%@*}"   # strip user@ if present
+[[ "$TARGET" == *"@"* ]] && HOST="${TARGET#*@}"
+[[ -z "$HOST" ]] && HOST="unknown"
+
+LOGDIR="$LOGBASE/$HOST"
+mkdir -p "$LOGDIR"
+chmod 700 "$LOGDIR"
+
+LOGFILE="$LOGDIR/${HOST}_${DATESTR}_ssh.log"
+
+# Header
+{
+  echo "=== BEGIN SSH ==="
+  echo "Command:    ssh $*"
+  echo "Start Time: $START_TIMESTAMP"
+} >> "$LOGFILE"
+
+# Run SSH via script to capture session output
+script -q /tmp/ssh-session-$$.log /usr/bin/ssh "$@"
+EXITCODE=$?
+
+END_TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S')"
+END_EPOCH=$(date +%s)
+DURATION=$((END_EPOCH - START_EPOCH))
+FORMATTED_DURATION=$(printf "%d:%02d:%02d" $((DURATION/3600)) $(( (DURATION%3600)/60 )) $((DURATION%60)))
+
+# Footer
+{
+  echo "End Time:   $END_TIMESTAMP"
+  echo "Duration:   $FORMATTED_DURATION"
+  echo "Exit Code:  $EXITCODE"
+  echo "BEGIN SSH session content"
+  echo "=============================================================================="
+  echo
+} >> "$LOGFILE"
+
+# Append captured session output
+cat /tmp/ssh-session-$$.log >> "$LOGFILE"
+rm -f /tmp/ssh-session-$$.log
+
+{
+  echo "=============================================================================="
+  echo "END SSH session content"
+  echo "=== END SSH ==="
+  echo
+} >> "$LOGFILE"
+
+exit $EXITCODE

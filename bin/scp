@@ -1,0 +1,55 @@
+#!/bin/bash
+
+LOGBASE="$HOME/Projects/logs"
+DATESTR="$(date '+%Y-%m-%d')"
+START_TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S')"
+START_EPOCH=$(date +%s)
+
+# Extract hostname
+HOST="unknown"
+for arg in "$@"; do
+  if [[ "$arg" =~ ^([^@:]+@)?([^@:]+): ]]; then
+    HOST="${BASH_REMATCH[2]}"
+    break
+  fi
+done
+
+LOGDIR="${LOGBASE}/${HOST}"
+mkdir -p "${LOGDIR}"
+chmod 700 "${LOGDIR}"
+
+LOGFILE="$LOGDIR/${HOST}_${DATESTR}_scp.log"
+touch "${LOGFILE}"
+
+# Log start metadata
+{
+  echo "=== BEGIN SCP ==="
+  echo "Command:    scp $*"
+  echo "Start Time: ${START_TIMESTAMP}"
+} >> "$LOGFILE"
+
+# Run SCP with unbuffered output (no tee)
+# This lets progress bars, etc. work correctly
+/usr/bin/scp "$@"
+EXITCODE=$?
+
+END_TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S')"
+END_EPOCH=$(date +%s)
+DURATION=$((END_EPOCH - START_EPOCH))
+
+# Format duration as H:MM:SS
+HOURS=$((DURATION / 3600))
+MINS=$(( (DURATION % 3600) / 60 ))
+SECS=$((DURATION % 60))
+FORMATTED_DURATION=$(printf "%d:%02d:%02d" "$HOURS" "$MINS" "$SECS")
+
+# Log end metadata
+{
+  echo "End Time:   ${END_TIMESTAMP}"
+  echo "Duration:   ${FORMATTED_DURATION}"
+  echo "Exit Code:  ${EXITCODE}"
+  echo "=== END SCP ==="
+  echo
+} >> "${LOGFILE}"
+
+exit "${EXITCODE}"
