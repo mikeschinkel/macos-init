@@ -17,4 +17,8 @@ export INIT_DIR="${HOME}/.init"
 
 export GOOGLE_CLOUD_PROJECT="stable-electron-464204-n4"
 
+export GOPATH="${HOME}/go"
+export GOBIN="${GOPATH}/bin"
+export PATH="${GOBIN}:$PATH"
+
 # export PATH="${HOME}/bin:${PATH}"
