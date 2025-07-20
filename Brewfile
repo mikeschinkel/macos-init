@@ -34,4 +34,4 @@ cask "acorn"
 cask "rapidapi"
 cask "typora"
 cask "repo-prompt"
-
+cask "discord"
