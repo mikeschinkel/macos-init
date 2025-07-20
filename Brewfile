@@ -16,6 +16,7 @@ brew "unar"
 brew "sf"
 brew "jq"
 brew "cloudflared"
+brew "sqlc"
 
 cask "google-chrome"
 cask "zed"
