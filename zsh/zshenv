@@ -8,8 +8,6 @@
 # Global environment variables go here
 # export EDITOR='vim'
 
-export PATH="${HOME}/bin:${PATH}"
-
 export NVM_DIR="${HOME}/.nvm"
 
 ## This is the default host for docker, just here for the ratio
@@ -18,3 +16,5 @@ export NVM_DIR="${HOME}/.nvm"
 export INIT_DIR="${HOME}/.init"
 
 export GOOGLE_CLOUD_PROJECT="stable-electron-464204-n4"
+
+# export PATH="${HOME}/bin:${PATH}"

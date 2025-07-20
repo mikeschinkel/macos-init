@@ -39,3 +39,6 @@ alias wp-sync="rsync -avz --delete ./wordpress-root/ wp-deploy:/srv/wordpress/"
 # PS1='%n@%m %~ %# '
 
 # Plugin and theme setup would go here
+
+## ALWAY HAVE THIS LAST
+export PATH="${HOME}/bin:${HOME}/.init/bin:${PATH}"
