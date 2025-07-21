@@ -1,5 +1,12 @@
 #!/bin/bash
+# See https://chatgpt.com/share/687e4b50-8e4c-800a-9f25-e7ce73c40e0f
 
+if [[ "$1" == "git@github.com" ]]; then
+  exec /usr/bin/ssh "$@"
+fi
+if [[ -n "$SSH_ORIGINAL_COMMAND" ]]; then
+  exec /usr/bin/ssh "$@"
+fi
 LOGBASE="$HOME/Projects/logs"
 DATESTR="$(date '+%Y-%m-%d')"
 START_TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S')"
