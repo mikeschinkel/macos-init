@@ -21,6 +21,7 @@ To build a developer-focused system that:
 * Adds metadata headers and footers including command, start time, end time, duration, and exit code
 * Clearly separates metadata from session content using visually distinct markers
 * Avoided `~/.zshrc` function wrapping for clarity and discoverability (`which ssh` works correctly)
+* Bypasses the logging wrapper when stdin or stdout are not a terminal (`[[ -t 0 && -t 1 ]]`) to support non-interactive uses like `git pull`, `rsync`, or remote commands
 * Chose `~/Projects/logs/` as a safe and SIP-avoiding storage location on external drives
 
 ### Example Output
@@ -45,6 +46,8 @@ END SSH session content
 * `script -q` used for macOS compatibility (no `-f` flag)
 * Log files are appended per host per day
 * ANSI codes from SSH session are retained; can optionally be stripped later
+* Wrapper bypasses logging entirely for non-TTY calls (fixing `git pull` and similar failures)
+* Legacy special-case logic for `git@github.com` and `SSH_ORIGINAL_COMMAND` was removed in favor of general-purpose TTY detection
 
 ---
 
