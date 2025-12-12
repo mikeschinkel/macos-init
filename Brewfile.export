@@ -1,0 +1,117 @@
+tap "goreleaser/tap"
+tap "supabase/tap"
+# Cloudflare Tunnel client (formerly Argo Tunnel)
+brew "cloudflared"
+# OpenAI's coding agent that runs in your terminal
+brew "codex"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# DDC monitor controls (brightness) for Mac OSX command-line
+brew "ddcctl"
+# Utility to configure multi-display resolutions and arrangements
+brew "displayplacer"
+# Isolated development environments using Docker
+brew "docker-compose"
+# Play, record, convert, and stream audio and video
+brew "ffmpeg"
+# Monitor a directory for changes and run a shell command
+brew "fswatch"
+# Terminal JSON viewer
+brew "fx"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# Update of iperf: measures TCP, UDP, and SCTP bandwidth
+brew "iperf3"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# LastPass command-line interface tool
+brew "lastpass-cli"
+# Mac App Store command-line interface
+brew "mas"
+# Manage multiple Node.js versions
+brew "nvm"
+# Tool for managing OCI containers and pods
+brew "podman"
+# Utility that provides fast incremental file transfer
+brew "rsync"
+# Command-line toolkit for Salesforce development
+brew "sf"
+# Generate type safe Go from SQL
+brew "sqlc"
+# Crypto and x509 Swiss-Army-Knife
+brew "step"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Command-line unarchiving tools supporting multiple formats
+brew "unar"
+# Programming language designed for robustness, optimality, and clarity
+brew "zig"
+# Supabase CLI
+brew "supabase/tap/supabase"
+# Image editor focused on simplicity
+cask "acorn"
+# Anthropic's official Claude AI desktop app
+cask "claude"
+# Voice and text chat software
+cask "discord"
+# App to build and share containerised applications and microservices
+cask "docker-desktop"
+# Web browser
+cask "google-chrome"
+# Release engineering, simplified.
+cask "goreleaser-pro"
+# JetBrains tools manager
+cask "jetbrains-toolbox"
+# Password manager
+cask "lastpass"
+# Software for Logitech devices
+cask "logi-options+"
+# Provides updates to various Microsoft products
+cask "microsoft-auto-update"
+# Multi-platform web browser
+cask "microsoft-edge"
+# Meet, chat, call, and collaborate in just one place
+cask "microsoft-teams"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
+# Browse, manage, inspect containers and images
+cask "podman-desktop"
+# HTTP client that helps testing and describing APIs
+cask "rapidapi"
+# Move and resize windows using keyboard shortcuts or snap areas
+cask "rectangle"
+# Prompt generation tool
+cask "repo-prompt"
+# Screenshot measurement and annotation tool
+cask "shottr"
+# Team communication and collaboration software
+cask "slack"
+# Automatic time and productivity tracking app
+cask "timing"
+# Configurable document editor that supports Markdown
+cask "typora"
+# Open-source code editor
+cask "visual-studio-code"
+# Native desktop client for WhatsApp
+cask "whatsapp"
+# Multiplayer code editor
+cask "zed"
+# Open-source markdown editor
+cask "zettlr"
+mas "AJA System Test Lite", id: 1092006274
+mas "Bear", id: 1091189122
+mas "Blackmagic Disk Speed Test", id: 425264550
+mas "iMovie", id: 408981434
+mas "LastPass for Safari", id: 6504626762
+mas "Noto", id: 1459055246
+mas "Pages", id: 409201541
+mas "RetroClip", id: 1332064978
+mas "Soulver 3", id: 1508732804
+go "cmd/gofmt"
+go "github.com/sqlc-dev/sqlc/cmd/sqlc"
