@@ -1,4 +1,5 @@
 tap "supabase/tap"
+tap "goreleaser/tap"
 
 brew "lastpass-cli"
 brew "git"
@@ -16,8 +17,8 @@ brew "sf"
 brew "jq"
 brew "cloudflared"
 brew "sqlc"
-brew "codex"
-cask "docker"
+brew "fx"
+brew "mas"
 
 cask "google-chrome"
 cask "zed"
@@ -37,3 +38,12 @@ cask "repo-prompt"
 cask "discord"
 cask "logi-options+"
 cask "rectangle"
+cask "microsoft-teams"
+cask "macs-fan-control"
+cask "goreleaser/tap/goreleaser"
+cask "codex"
+
+mas "Bear", id: 1091189122
+mas "LastPass for Safari", id: 6504626762
+mas "Soulver 3", id: 1508732804
+mas "RetroClip", id: 1332064978
