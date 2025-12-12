@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# timeout wrapper - calls gtimeout (GNU coreutils)
+# Install coreutils first: brew install coreutils
+
+if command -v gtimeout >/dev/null 2>&1; then
+    exec gtimeout "$@"
+else
+    echo "timeout: gtimeout not found. Install with: brew install coreutils" >&2
+    exit 127
+fi
