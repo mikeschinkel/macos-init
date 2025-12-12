@@ -5,6 +5,14 @@
 [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
 [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
 
+COMMON_SH="${INIT_DIR}/scripts/common.sh"
+if ! source "${COMMON_SH}"; then
+  echo "ERROR: failed to source ${COMMON_SH}" >&2
+fi
+if [[ -o interactive ]]; then
+  export GORELEASER_KEY="$(${INIT_DIR}/bin/secret GORELEASER_KEY)"
+fi
+
 # Set options
 # setopt autocd              # change directory just by typing its name
 # setopt interactivecomments # allow comments in interactive mode
@@ -40,5 +48,5 @@ alias wp-sync="rsync -avz --delete ./wordpress-root/ wp-deploy:/srv/wordpress/"
 
 # Plugin and theme setup would go here
 
-## ALWAY HAVE THIS LAST
-export PATH="${HOME}/bin:${HOME}/.init/bin:${PATH}"
+## ALWAYS HAVE THIS LAST
+export PATH="${HOME}/.init/bin:${PATH}"
