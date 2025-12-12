@@ -1,6 +1,8 @@
 #!/bin/bash
 # See https://chatgpt.com/share/687e4b50-8e4c-800a-9f25-e7ce73c40e0f
 
+echo "$@" >> ~/Projects/logs/all-calls.log
+
 # If stdin is not a TTY, skip logging (e.g., for git, rsync, etc.)
 if ! [[ -t 0 && -t 1 ]]; then
   exec /usr/bin/ssh "$@"
