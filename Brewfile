@@ -42,6 +42,7 @@ cask "microsoft-teams"
 cask "macs-fan-control"
 cask "goreleaser/tap/goreleaser"
 cask "codex"
+cask "elgato-stream-deck"
 
 mas "Bear", id: 1091189122
 mas "LastPass for Safari", id: 6504626762
