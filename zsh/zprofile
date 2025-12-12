@@ -4,10 +4,19 @@
 # required by login shells and initialization commands that
 # should run only once
 
-# Login shell specific environment setup goes here
-
-eval "$(/usr/local/bin/brew shellenv)"
-
-# Added by Toolbox App
-export PATH="$PATH:/usr/local/bin"
+# TODO: Update these to print an error when not available.
+#       Rethink nested else statements
+# Choose correct Homebrew for this CPU
+if [[ "$(uname -m)" == "arm64" ]]; then
+  # Apple Silicon
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+else
+  # TODO: Ensure we are on Intel
+  # Intel
+  if [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+fi
 
