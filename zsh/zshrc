@@ -2,16 +2,29 @@
 # .zshrc is sourced for interactive shells
 # This is where most of your shell customization should go
 
-[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
-[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
+# Load modular rc files
+for f in "$HOME/.init/zsh/rc.d/"*.zsh(N); do
+  source "$f"
+done
+unset f
+
+# NVM (interactive-only is fine, but not strictly required)
+[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \
+  . "$(brew --prefix)/opt/nvm/nvm.sh"
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \
+  . "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
 
 COMMON_SH="${INIT_DIR}/scripts/common.sh"
 if ! source "${COMMON_SH}"; then
   echo "ERROR: failed to source ${COMMON_SH}" >&2
 fi
+
 if [[ -o interactive ]]; then
   export GORELEASER_KEY="$(${INIT_DIR}/bin/secret GORELEASER_KEY)"
+  export GITHUB_TOKEN="$(${INIT_DIR}/bin/secret GITHUB_TOKEN)"
 fi
+
+
 
 # Set options
 # setopt autocd              # change directory just by typing its name
@@ -40,11 +53,16 @@ fi
 alias glo='git log --oneline -20'
 alias wp-sync="rsync -avz --delete ./wordpress-root/ wp-deploy:/srv/wordpress/"
 
-# Functions
-# function mkcd() { mkdir -p "$@" && cd "$@"; }
+# See https://chatgpt.com/share/693c3e5f-e10c-800a-aafb-2aad860352ce
+alias dns='dns-sd -B _services._dns-sd._udp'
+alias dns-smb='dns-sd -B _smb._tcp'
+alias dns-http='dns-sd -B _http._tcp'
+alias dns-https='dns-sd -B _https._tcp'
 
-# Prompt configuration
-# PS1='%n@%m %~ %# '
+alias tmstart='tmux new -A -s active'
+
+# Prompt
+PROMPT=$'%~\n$ '
 
 # Plugin and theme setup would go here
 

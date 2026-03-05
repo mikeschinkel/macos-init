@@ -1,0 +1,98 @@
+#!/bin/zsh
+
+set -e
+
+GOPATH="${HOME}/go"
+
+print_section() {
+  echo -e "\n\033[1m$1\033[0m"
+}
+
+print_error() {
+  echo -e "[\033[0;31m!\033[0m] $1"
+}
+
+print_ok() {
+  echo -e "[\033[0;32m✓\033[0m] $1"
+}
+
+print_hint() {
+  echo -e "    → $1"
+}
+append_if_missing() {
+  local entry="$1"
+  local zshrc_file="${INIT_DIR}/zsh/zshrc"
+  if ! grep -Fxq "$entry" "${zshrc_file}"; then
+    echo "$entry" >> "${zshrc_file}"
+    print_ok "Appended to .zshrc: $entry"
+  else
+    print_ok ".zshrc already contains: $entry"
+  fi
+}
+main() {
+    print_section "Go Environment Diagnosis"
+
+    # Check multiple go binaries in PATH
+    print_section "Checking for multiple 'go' binaries in PATH..."
+    IFS=: read -rA path_parts <<< "$PATH"
+    declared_go=()
+    seen_paths=()
+
+    for part in "${path_parts[@]}"; do
+      go_path="$part/go"
+      if [ -x "$go_path" ]; then
+        duplicate=false
+        for seen in "${seen_paths[@]}"; do
+          if [ "$go_path" = "$seen" ]; then
+            duplicate=true
+            break
+          fi
+        done
+        if [ "$duplicate" = false ]; then
+          declared_go+=("$go_path")
+          seen_paths+=("$go_path")
+        fi
+      fi
+
+    done
+    if [ ${#declared_go[@]} -gt 1 ]; then
+      print_error "Multiple distinct 'go' binaries found in your PATH:"
+      for g in "${declared_go[@]}"; do
+        echo "- $g"
+      done
+      print_hint "Remove or reorder PATH entries to prefer your primary Go install."
+    else
+      print_ok "Single Go binary detected: ${declared_go[0]}"
+    fi
+
+    # Check if GOROOT is a valid Homebrew versioned install
+    print_section "Checking if GOROOT matches a known Homebrew Go install path..."
+    actual_goroot="$(go env GOROOT 2>/dev/null || true)"
+    resolved_expected="$(readlink -f /usr/local/opt/go/libexec 2>/dev/null || true)"
+    resolved_actual="$(readlink -f "$actual_goroot" 2>/dev/null || true)"
+
+    if [ -n "$actual_goroot" ] && [[ "$resolved_actual" != "$resolved_expected" && "$resolved_actual" != /usr/local/Cellar/go/*/libexec ]]; then
+      print_error "GOROOT is not set to a canonical Homebrew path."
+      echo "Current: $actual_goroot"
+      echo "Expected: /usr/local/opt/go/libexec (→ $resolved_expected)"
+      print_hint "Updating .zshrc to export correct GOROOT..."
+      append_if_missing "export GOROOT=/usr/local/opt/go/libexec"
+    else
+      print_ok "GOROOT is correctly set to a Homebrew Go installation."
+    fi
+
+    # Check if ~/go contains Go SDK
+    print_section "Checking if \$GOPATH contains an SDK..."
+    if [ -f "$GOPATH/VERSION" ] && [ -d "$GOPATH/src" ]; then
+      print_error "Looks like \$GOPATH contains a full Go SDK install."
+      print_hint "You can run the cleanup script to remove the SDK from \$GOPATH."
+    else
+      print_ok "\$GOPATH does not contain an SDK installation."
+    fi
+
+    # Ensure GOPATH/bin is in PATH
+    print_section "Ensuring \$GOPATH/bin is in PATH..."
+    append_if_missing "export PATH=\"\$HOME/go/bin:\$PATH\""
+}
+main
+echo

@@ -1,0 +1,55 @@
+Prefix
+- Prefix key: Ctrl-q
+
+Pane management
+- Close active pane: Ctrl-q x
+- Move focus: Ctrl-q h/j/k/l
+- Resize pane: Ctrl-q H/J/K/L
+- Zoom toggle: F10
+
+Window management
+- Next/previous: Ctrl-q n / Ctrl-q p
+- Rename current: F5
+- New named window: F2
+- Move current window to index 2:
+  tmux move-window -t :2
+- Swap window 3 and 6:
+  tmux swap-window -s :3 -t :6
+- Renumber windows in current session:
+  tmux move-window -r
+
+Cross-session windows
+- List sessions:
+  tmux list-sessions
+- Move current window to session "work":
+  tmux move-window -t work:
+- Move window 3 to window index 2 in session "work":
+  tmux move-window -s :3 -t work:2
+- Swap windows across sessions:
+  tmux swap-window -s dev:2 -t work:4
+- Link (share) a window into another session:
+  tmux link-window -s dev:3 -t work:5
+- Unlink current window from current session:
+  tmux unlink-window
+- Kill a specific window in another session:
+  tmux kill-window -t dev:3
+
+Session helpers
+- Switch client to session "work":
+  tmux switch-client -t work
+- Create or attach session "work":
+  tmux new-session -A -s work
+
+Navigation without prefix
+- Previous/next pane: Opt-, / Opt-.
+- Previous/next window: Opt-< / Opt->
+
+Config
+- Reload config: Ctrl-q r
+- Config root: ~/.init/tmux/
+- Main file: ~/.init/tmux/tmux.conf
+
+Notes
+- base-index and pane-base-index are set to 1.
+- renumber-windows is enabled.
+- Press <esc> to close this popup.

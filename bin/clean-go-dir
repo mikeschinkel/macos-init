@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+GOPATH="${HOME}/go"
+
+echo "Cleaning up unexpected Go SDK files from $GOPATH"
+
+declare -a sdk_dirs=("api" "doc" "lib" "misc" "src" "test")
+declare -a sdk_files=(
+  "VERSION"
+  "README.md"
+  "CONTRIBUTING.md"
+  "SECURITY.md"
+  "LICENSE"
+  "PATENTS"
+  "codereview.cfg"
+  "go.env"
+  "src"
+)
+
+for dir in "${sdk_dirs[@]}"; do
+  if [ -d "$GOPATH/$dir" ]; then
+    echo "Removing directory: $GOPATH/$dir"
+    rm -rf "$GOPATH/$dir"
+  fi
+done
+
+for file in "${sdk_files[@]}"; do
+  if [ -f "$GOPATH/$file" ]; then
+    echo "Removing file: $GOPATH/$file"
+    rm -f "$GOPATH/$file"
+  fi
+done
+
+echo "Done. Preserved:"
+echo "- $GOPATH/bin (your installed tools)"
+echo "- $GOPATH/pkg (your module cache, etc.)"

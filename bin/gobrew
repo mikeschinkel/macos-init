@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# gobrew: Homebrew-powered Go version switcher
+
+BREW_PREFIX="$(brew --prefix)"
+GO_OPT_DIR="$BREW_PREFIX/opt/go"
+GO_CELLAR_DIR="$BREW_PREFIX/Cellar/go"
+
+GOBREW_STATE="$HOME/.gobrew-state"
+
+function list_versions() {
+  echo "Installed Go versions via Homebrew:"
+  ls "$GO_CELLAR_DIR"
+}
+
+function current_version() {
+  if [ -f "$GOBREW_STATE" ]; then
+    echo "Current Go version (gobrew): $(cat $GOBREW_STATE)"
+  else
+    go version
+  fi
+}
+
+function use_version() {
+  local version="$1"
+  local sdk_path="$GO_CELLAR_DIR/$version/libexec"
+  if [ ! -d "$sdk_path" ]; then
+    echo "Go version $version not installed via Homebrew"
+    exit 1
+  fi
+
+  echo "$version" > "$GOBREW_STATE"
+  echo "Switched to Go $version"
+  echo "You can now set your shell environment with:"
+  echo "  export GOROOT=\"$sdk_path\""
+  echo "  export PATH=\"$sdk_path/bin:\$PATH\""
+}
+
+function install_version() {
+  local version="$1"
+  echo "Installing Go $version via Homebrew..."
+  brew install "go@$version"
+}
+
+function uninstall_version() {
+  local version="$1"
+  echo "Uninstalling Go $version via Homebrew..."
+  brew uninstall "go@$version"
+}
+
+function show_help() {
+  echo "Usage: gobrew <command> [version]"
+  echo "Commands:"
+  echo "  list                   List installed Go versions via Homebrew"
+  echo "  current                Show current active Go version"
+  echo "  use <version>          Switch to given Go version"
+  echo "  install <version>      Install a specific Go version"
+  echo "  uninstall <version>    Uninstall a specific Go version"
+  echo "  help                   Show this help message"
+}
+
+case "$1" in
+  list)
+    list_versions
+    ;;
+  current)
+    current_version
+    ;;
+  use)
+    use_version "$2"
+    ;;
+  install)
+    install_version "$2"
+    ;;
+  uninstall)
+    uninstall_version "$2"
+    ;;
+  help|*)
+    show_help
+    ;;
+esac

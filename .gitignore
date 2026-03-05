@@ -4,3 +4,11 @@
 .cache
 .cache/**
 .secrets.json
+
+# Defensive: prevent accidental secret commits
+*.pem
+*.key
+*.p12
+.env
+.env.*
+cache/

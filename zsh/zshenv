@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # .zshenv is sourced for all instances of Zsh
-# It should contain commands to set the command search path, 
+# It should contain commands to set the command search path,
 # plus other important environment variables
 # This file should not contain commands that produce output
 # or assume the shell is attached to a tty
@@ -15,11 +15,25 @@ export NVM_DIR="${HOME}/.nvm"
 
 export INIT_DIR="${HOME}/.init"
 
-export GOOGLE_CLOUD_PROJECT="stable-electron-464204-n4"
-
 export GOPATH="${HOME}/go"
 export GOBIN="${GOPATH}/bin"
+export GOEXPERIMENT=jsonv2
 export PATH="${GOBIN}:$PATH:/usr/local/bin"
+
+# Used by https://github.com/mikeschinkel/ai-agent-depot
+export CLAUDE_LOG_FILEPATH="~/Projects/ai-agent-depot/logs/log.txt"
+export GO_DOTERR_FILEPATH="~/Projects/go-pkgs/go-doterr/doterr.go"
+export GO_DT_ERRORS_FILEPATH="~/Projects/go-pkgs/go-dt/errors.go"
+export GO_DT_DIRPATH="~/Projects/go-pkgs/go-dt"
+
+# Added by Claude Code
+export PATH="${HOME}/.local/bin:$PATH"
+
+export ENABLE_LSP_TOOL=1
+
+export ESXI_LICENSE='free'
+
 
 # IMPORTANT!  NO COMMAND substitution. EVER.
 # .zshenv must be pure environment only.
+
