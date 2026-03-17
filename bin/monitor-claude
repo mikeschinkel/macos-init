@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# claude-tmux-monitor.sh
+# Monitors tmux panes for Claude Code waiting-for-input patterns
+# and highlights the corresponding window tab.
+
+# Patterns that indicate Claude Code is waiting for user input
+PATTERNS='(^[[:space:]]*[0-9]+\. (Yes|No|Chat about this|Retry|Skip))|Do you want to proceed|waiting for your'
+
+ALERT_PREFIX=" *"
+ALERT_COLOR="red"
+POLL_INTERVAL=2
+SECONDS=0
+
+# Track which windows are currently alerted so we only log transitions
+declare -A ALERTED
+
+while true; do
+    for pane in $(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index}' 2>/dev/null); do
+        window="${pane%.*}"
+        content=$(tmux capture-pane -t "$pane" -p -S -10 2>/dev/null)
+
+        if printf '%s' "$content" | grep -qE "$PATTERNS"; then
+            if [[ -z "${ALERTED[$window]}" ]]; then
+                current_name=$(tmux display-message -t "$window" -p '#{window_name}' 2>/dev/null)
+
+                # Strip any existing alert prefix to avoid stacking
+                current_name="${current_name##*\*}"
+
+                # Set @window_color user option (requires format string support in .tmux.conf)
+                tmux set-window-option -t "$window" @window_color "$ALERT_COLOR" 2>/dev/null
+
+                # Prefix the window name as a fallback/additional signal
+                tmux rename-window -t "$window" "${ALERT_PREFIX}${current_name}" 2>/dev/null
+
+                ALERTED[$window]="$current_name"
+                printf "[%4ds] ALERT ON  %s (%s)\n" "$SECONDS" "$window" "$current_name"
+            fi
+        else
+            if [[ -n "${ALERTED[$window]}" ]]; then
+                original_name="${ALERTED[$window]}"
+
+                # Clear @window_color
+                tmux set-window-option -t "$window" @window_color "" 2>/dev/null
+
+                # Restore original window name
+                tmux rename-window -t "$window" "$original_name" 2>/dev/null
+
+                printf "[%4ds] ALERT OFF %s (%s)\n" "$SECONDS" "$window" "$original_name"
+                unset ALERTED["$window"]
+            fi
+        fi
+    done
+
+    # Overwrite a single status line showing uptime
+    count=${#ALERTED[@]}
+    printf "\r\033[K[%4ds] Monitoring... %d window(s) alerting" "$SECONDS" "$count"
+
+    sleep "$POLL_INTERVAL"
+done
