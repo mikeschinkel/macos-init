@@ -31,9 +31,9 @@ export PATH="${HOME}/.local/bin:$PATH"
 
 export ENABLE_LSP_TOOL=1
 
+# Used by github.com/mikeschinkel/homelab
+# The homelab repo might not be public or even pushed, yet
 export ESXI_LICENSE='free'
-
 
 # IMPORTANT!  NO COMMAND substitution. EVER.
 # .zshenv must be pure environment only.
-
