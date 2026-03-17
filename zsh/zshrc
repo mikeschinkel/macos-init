@@ -59,7 +59,13 @@ alias dns-smb='dns-sd -B _smb._tcp'
 alias dns-http='dns-sd -B _http._tcp'
 alias dns-https='dns-sd -B _https._tcp'
 
-alias tmstart='tmux new -A -s active'
+tmstart() {
+  # Ensure background session exists with monitor-claude running
+  if ! tmux has-session -t background 2>/dev/null; then
+    tmux new-session -d -s background -n monitor-claude "$HOME/.init/bin/monitor-claude"
+  fi
+  tmux new -A -s active
+}
 
 # Prompt
 PROMPT=$'%~\n$ '
