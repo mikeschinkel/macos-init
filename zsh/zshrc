@@ -27,6 +27,7 @@ fi
 
 
 # Set options
+unsetopt LIST_AMBIGUOUS      # show completions immediately on first tab (no double-tap)
 # setopt autocd              # change directory just by typing its name
 # setopt interactivecomments # allow comments in interactive mode
 # setopt magicequalsubst     # enable filename expansion for arguments of the form 'anything=expression'
@@ -60,6 +61,11 @@ alias dns='dns-sd -B _services._dns-sd._udp'
 alias dns-smb='dns-sd -B _smb._tcp'
 alias dns-http='dns-sd -B _http._tcp'
 alias dns-https='dns-sd -B _https._tcp'
+
+# zoxide init must come AFTER compinit
+eval "$(zoxide init zsh)"
+
+source <(fzf --zsh) 
 
 tmstart() {
   # Reload config so running server picks up any changes
