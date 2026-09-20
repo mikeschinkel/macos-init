@@ -53,6 +53,8 @@ fi
 alias glo='git log --oneline -20'
 alias wp-sync="rsync -avz --delete ./wordpress-root/ wp-deploy:/srv/wordpress/"
 
+alias e=endless
+
 # See https://chatgpt.com/share/693c3e5f-e10c-800a-aafb-2aad860352ce
 alias dns='dns-sd -B _services._dns-sd._udp'
 alias dns-smb='dns-sd -B _smb._tcp'
@@ -71,6 +73,14 @@ tmstart() {
 PROMPT=$'%~\n$ '
 
 # Plugin and theme setup would go here
+
+# Endless: project activity monitor (prompt hook)
+_endless_prompt_hook() {
+  (endless-hook prompt "$PWD" &>/dev/null &)
+}
+precmd_functions+=(_endless_prompt_hook)
+
+eval "$(endless shell-init)"
 
 ## ALWAYS HAVE THIS LAST
 export PATH="${HOME}/.init/bin:${PATH}"
