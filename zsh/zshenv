@@ -20,8 +20,6 @@ export GOBIN="${GOPATH}/bin"
 export GOEXPERIMENT=jsonv2
 export PATH="${GOBIN}:$PATH:/usr/local/bin"
 
-# Used by https://github.com/mikeschinkel/ai-agent-depot
-export CLAUDE_LOG_FILEPATH="~/Projects/ai-agent-depot/logs/log.txt"
 export GO_DOTERR_FILEPATH="~/Projects/go-pkgs/go-doterr/doterr.go"
 export GO_DT_ERRORS_FILEPATH="~/Projects/go-pkgs/go-dt/errors.go"
 export GO_DT_DIRPATH="~/Projects/go-pkgs/go-dt"
