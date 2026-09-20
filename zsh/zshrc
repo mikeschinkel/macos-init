@@ -62,6 +62,9 @@ alias dns-smb='dns-sd -B _smb._tcp'
 alias dns-http='dns-sd -B _http._tcp'
 alias dns-https='dns-sd -B _https._tcp'
 
+fpath=("/Users/mikeschinkel/.h2/completions" $fpath)
+autoload -Uz compinit && compinit
+
 # zoxide init must come AFTER compinit
 eval "$(zoxide init zsh)"
 
